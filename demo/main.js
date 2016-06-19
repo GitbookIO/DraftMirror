@@ -1,12 +1,14 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var schema = require("prosemirror/dist/schema-basic").schema
 
 var ProseMirror = require('../');
+var defaultJson = require('./default');
 
 var EditorExample = React.createClass({
     getInitialState: function() {
         return {
-            editorState: new ProseMirror.EditorState()
+            editorState: ProseMirror.EditorState.createFromJSON(schema, defaultJson)
         }
     },
 
@@ -16,11 +18,28 @@ var EditorExample = React.createClass({
         });
     },
 
+    onToggleStyle: function(style) {
+
+    },
+
+    onLog: function() {
+        var editorState = this.state.editorState;
+        console.log(editorState.getContentAsJSON())
+    },
+
     render: function() {
-        return <ProseMirror
-            editorState={this.state.editorState}
-            onChange={this.onChange}
-        />;
+        return <div className="EditorExample">
+            <div className="Toolbar">
+                <button onClick={this.onToggleStyle.bind(this, 'bold')}>Bold</button>
+                <button onClick={this.onToggleStyle.bind(this, 'italic')}>Italic</button>
+                <button onClick={this.onLog}>Log</button>
+            </div>
+
+            <ProseMirror
+                editorState={this.state.editorState}
+                onChange={this.onChange}
+            />
+        </div>;
     }
 });
 
