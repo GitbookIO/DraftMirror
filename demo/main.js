@@ -1,17 +1,28 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var classNames = require('classnames');
-var schema = require("prosemirror/dist/schema-basic").schema
+
+var Schema = require("prosemirror/dist/model").Schema;
+var schema = require("prosemirror/dist/schema-basic").schema;
 
 var DraftMirror = require('../');
+
+var MathWidget = require('./math');
 var defaultJson = require('./default');
 
-console.log('schema', schema);
+var customSchema = new Schema({
+    nodes: schema.nodeSpec.addBefore('image', 'math', {
+        type: MathWidget, group: "inline"
+    }),
+    marks: schema.markSpec
+});
+
+console.log('schema', customSchema);
 
 var EditorExample = React.createClass({
     getInitialState: function() {
         return {
-            editorState: DraftMirror.EditorState.createFromJSON(schema, defaultJson)
+            editorState: DraftMirror.EditorState.createFromJSON(customSchema, defaultJson)
         }
     },
 

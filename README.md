@@ -42,3 +42,30 @@ var MyApp = React.createClass({
 ```js
 var newEditorState = DraftMirror.StyleUtils.toggleInlineStyle(editorState, 'strong');
 ```
+
+##### Widgets
+
+DraftMirror allows the extension of ProseMirror syntax using custom React widgets:
+
+```js
+var DraftMirror = require('draftmirror');
+var schema = DraftMirror.schema;
+
+var MyWidgetComponent = React.createClass({
+    render: function() {
+        return <div>...</div>;
+    }
+});
+
+var MyWidget = DraftMirror.createWidget({
+    component: MyWidgetComponent
+});
+
+const mySchema = new Schema({
+    nodes: schema.nodeSpec.addBefore('image', 'mywidget', {
+        type: MyWidget, group: "inline"
+    }),
+    marks: schema.markSpec
+});
+```
+

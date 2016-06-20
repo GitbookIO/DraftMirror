@@ -18,6 +18,12 @@ module.exports = {
         {
           "type": "text",
           "text": "Hello World"
+        },
+        {
+          "type": "math",
+          "attrs": {
+            tex: "a = 4"
+          }
         }
       ]
     },
