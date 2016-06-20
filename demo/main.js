@@ -77,6 +77,7 @@ var EditorExample = React.createClass({
                 {this.renderBlockButton('H1', 'heading', { level: 1 })}
                 {this.renderBlockButton('H2', 'heading', { level: 2 })}
                 {this.renderBlockButton('H3', 'heading', { level: 3 })}
+                {this.renderBlockButton('Code', 'code')}
 
 
                 {this.renderStyleButton('Bold', 'strong')}
