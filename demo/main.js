@@ -39,6 +39,31 @@ var EditorExample = React.createClass({
     },
 
     /**
+     * Prompt and insert an image
+     */
+    onInsertImage: function() {
+        var editorState = this.state.editorState;
+        var src = window.prompt('SRC:');
+
+        this.onChange(
+            ProseMirror.EntityUtils.insertImage(editorState, {
+                src: src
+            })
+        );
+    },
+
+    /**
+     * Insert an HR
+     */
+    onInsertHR: function() {
+        var editorState = this.state.editorState;
+
+        this.onChange(
+            ProseMirror.EntityUtils.insertHR(editorState)
+        );
+    },
+
+    /**
      * Render a block toggler for the toolbar
      */
     renderBlockButton: function(text, type, attrs) {
@@ -73,17 +98,28 @@ var EditorExample = React.createClass({
     render: function() {
         return <div className="EditorExample">
             <div className="Toolbar">
-                {this.renderBlockButton('P', 'paragraph')}
-                {this.renderBlockButton('H1', 'heading', { level: 1 })}
-                {this.renderBlockButton('H2', 'heading', { level: 2 })}
-                {this.renderBlockButton('H3', 'heading', { level: 3 })}
-                {this.renderBlockButton('Code', 'code')}
+                <div className="ButtonsGroup">
+                    {this.renderBlockButton('P', 'paragraph')}
+                    {this.renderBlockButton('H1', 'heading', { level: 1 })}
+                    {this.renderBlockButton('H2', 'heading', { level: 2 })}
+                    {this.renderBlockButton('H3', 'heading', { level: 3 })}
+                    {this.renderBlockButton('Code', 'code')}
+                </div>
 
+                <div className="ButtonsGroup">
+                    {this.renderStyleButton('Bold', 'strong')}
+                    {this.renderStyleButton('Italic', 'em')}
+                    {this.renderStyleButton('Code', 'code')}
+                </div>
 
-                {this.renderStyleButton('Bold', 'strong')}
-                {this.renderStyleButton('Italic', 'em')}
-                {this.renderStyleButton('Code', 'code')}
-                <button onClick={this.onLog}>Log</button>
+                <div className="ButtonsGroup">
+                    <button onClick={this.onInsertHR}>Insert HR</button>
+                    <button onClick={this.onInsertImage}>Insert Image</button>
+                </div>
+
+                <div className="ButtonsGroup">
+                    <button onClick={this.onLog}>Log</button>
+                </div>
             </div>
 
             <ProseMirror

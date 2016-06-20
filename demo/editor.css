@@ -1,4 +1,7 @@
 
+.ButtonsGroup {
+    margin-right: 15px;
+}
 
 .ToggleButton {
     background: #eee;
@@ -8,6 +11,7 @@
     padding: 4px;
     margin-right: 4px;
 }
+
 .ToggleButton.active {
     background: #428bca;
     color: #fff;

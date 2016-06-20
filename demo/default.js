@@ -20,6 +20,18 @@ module.exports = {
           "text": "Hello World"
         }
       ]
+    },
+    {
+      "type": "horizontal_rule"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "text": "Hello World"
+        }
+      ]
     }
   ],
   "type": "doc"
