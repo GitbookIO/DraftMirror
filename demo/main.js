@@ -39,6 +39,24 @@ var EditorExample = React.createClass({
     },
 
     /**
+     * Redo / Undo
+     */
+    onUndo: function() {
+        var editorState = this.state.editorState;
+
+        this.onChange(
+            DraftMirror.HistoryUtils.undo(editorState)
+        );
+    },
+    onRedo: function() {
+        var editorState = this.state.editorState;
+
+        this.onChange(
+            DraftMirror.HistoryUtils.redo(editorState)
+        );
+    },
+
+    /**
      * Prompt and insert an image
      */
     onInsertImage: function() {
@@ -96,8 +114,15 @@ var EditorExample = React.createClass({
     },
 
     render: function() {
+        var editorState = this.state.editorState;
+
         return <div className="EditorExample">
             <div className="Toolbar">
+                <div className="ButtonsGroup">
+                    <button onClick={this.onUndo} disabled={!DraftMirror.HistoryUtils.canUndo(editorState)}>Undo</button>
+                    <button onClick={this.onRedo} disabled={!DraftMirror.HistoryUtils.canRedo(editorState)}>Redo</button>
+                </div>
+
                 <div className="ButtonsGroup">
                     {this.renderBlockButton('P', 'paragraph')}
                     {this.renderBlockButton('H1', 'heading', { level: 1 })}
@@ -122,8 +147,8 @@ var EditorExample = React.createClass({
                 </div>
             </div>
 
-            <ProseMirror
-                editorState={this.state.editorState}
+            <DraftMirror
+                editorState={editorState}
                 onChange={this.onChange}
             />
         </div>;
