@@ -5,6 +5,8 @@ var schema = require("prosemirror/dist/schema-basic").schema
 var ProseMirror = require('../');
 var defaultJson = require('./default');
 
+console.log('schema', schema);
+
 var EditorExample = React.createClass({
     getInitialState: function() {
         return {
@@ -19,7 +21,15 @@ var EditorExample = React.createClass({
     },
 
     onToggleStyle: function(style) {
+        this.onChange(
+            ProseMirror.StyleUtils.toggleInlineStyle(this.state.editorState, style)
+        );
+    },
 
+    onToggleBlock: function(type, attrs) {
+        this.onChange(
+            ProseMirror.StyleUtils.toggleBlockType(this.state.editorState, type, attrs)
+        );
     },
 
     onLog: function() {
@@ -30,8 +40,14 @@ var EditorExample = React.createClass({
     render: function() {
         return <div className="EditorExample">
             <div className="Toolbar">
-                <button onClick={this.onToggleStyle.bind(this, 'bold')}>Bold</button>
-                <button onClick={this.onToggleStyle.bind(this, 'italic')}>Italic</button>
+                <button onClick={this.onToggleBlock.bind(this, 'paragraph', {})}>P</button>
+                <button onClick={this.onToggleBlock.bind(this, 'heading', { level: 1 })}>H1</button>
+                <button onClick={this.onToggleBlock.bind(this, 'heading', { level: 2 })}>H2</button>
+                <button onClick={this.onToggleBlock.bind(this, 'heading', { level: 3 })}>H3</button>
+
+
+                <button onClick={this.onToggleStyle.bind(this, 'strong')}>Bold</button>
+                <button onClick={this.onToggleStyle.bind(this, 'em')}>Italic</button>
                 <button onClick={this.onLog}>Log</button>
             </div>
 
