@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var classNames = require('classnames');
 var schema = require("prosemirror/dist/schema-basic").schema
 
 var ProseMirror = require('../');
@@ -37,17 +38,50 @@ var EditorExample = React.createClass({
         console.log(editorState.getContentAsJSON())
     },
 
+    /**
+     * Render a block toggler for the toolbar
+     */
+    renderBlockButton: function(text, type, attrs) {
+        var editorState = this.state.editorState;
+
+        return <button
+            className={classNames({
+                'ToggleButton': true,
+                'BlockButton': true,
+                active: ProseMirror.StyleUtils.hasBlockType(editorState, type, attrs)
+            })}
+            onClick={this.onToggleBlock.bind(this, type, attrs)}
+        >{text}</button>
+    },
+
+    /**
+     * Render a style toggler for the toolbar
+     */
+    renderStyleButton: function(text, type, attrs) {
+        var editorState = this.state.editorState;
+
+        return <button
+            className={classNames({
+                'ToggleButton': true,
+                'StyleButton': true,
+                active: ProseMirror.StyleUtils.hasInlineStyle(editorState, type, attrs)
+            })}
+            onClick={this.onToggleStyle.bind(this, type, attrs)}
+        >{text}</button>
+    },
+
     render: function() {
         return <div className="EditorExample">
             <div className="Toolbar">
-                <button onClick={this.onToggleBlock.bind(this, 'paragraph', {})}>P</button>
-                <button onClick={this.onToggleBlock.bind(this, 'heading', { level: 1 })}>H1</button>
-                <button onClick={this.onToggleBlock.bind(this, 'heading', { level: 2 })}>H2</button>
-                <button onClick={this.onToggleBlock.bind(this, 'heading', { level: 3 })}>H3</button>
+                {this.renderBlockButton('P', 'paragraph')}
+                {this.renderBlockButton('H1', 'heading', { level: 1 })}
+                {this.renderBlockButton('H2', 'heading', { level: 2 })}
+                {this.renderBlockButton('H3', 'heading', { level: 3 })}
 
 
-                <button onClick={this.onToggleStyle.bind(this, 'strong')}>Bold</button>
-                <button onClick={this.onToggleStyle.bind(this, 'em')}>Italic</button>
+                {this.renderStyleButton('Bold', 'strong')}
+                {this.renderStyleButton('Italic', 'em')}
+                {this.renderStyleButton('Code', 'code')}
                 <button onClick={this.onLog}>Log</button>
             </div>
 
