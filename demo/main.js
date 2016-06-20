@@ -7,20 +7,30 @@ var schema = require("prosemirror/dist/schema-basic").schema;
 
 var DraftMirror = require('../');
 
-var MathWidget = require('./math');
+var MathComponent = require('./math');
 var defaultJson = require('./default');
-
-var customSchema = new Schema({
-    nodes: schema.nodeSpec.addBefore('image', 'math', {
-        type: MathWidget, group: "inline"
-    }),
-    marks: schema.markSpec
-});
-
-console.log('schema', customSchema);
 
 var EditorExample = React.createClass({
     getInitialState: function() {
+        var MathWidget = DraftMirror.createWidget({
+            component: MathComponent,
+            attrs: {
+                tex: true
+            },
+            props: {
+
+            }
+        });
+
+
+        var customSchema = new Schema({
+            nodes: schema.nodeSpec.addBefore('image', 'math', {
+                type: MathWidget, group: "inline"
+            }),
+            marks: schema.markSpec
+        });
+
+
         return {
             editorState: DraftMirror.EditorState.createFromJSON(customSchema, defaultJson)
         }

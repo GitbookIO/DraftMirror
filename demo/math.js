@@ -1,17 +1,17 @@
 var React = require('react');
-var DraftMirror = require('../');
 
 var MathComponent = React.createClass({
+    onDoubleClick: function() {
+        var tex = this.props.attrs.tex;
+        var newTex = window.prompt('Tex:', tex);
+
+
+    },
+
     render: function() {
         var tex = this.props.attrs.tex;
-        return <div contentEditable={false}>{tex}</div>;
+        return <div contentEditable={false} onDoubleClick={this.onDoubleClick}>{tex}</div>;
     }
 });
 
-var MathWidget = DraftMirror.createWidget({
-    component: MathComponent,
-    attrs: {
-        tex: true
-    }
-});
-module.exports = MathWidget;
+module.exports = MathComponent;
