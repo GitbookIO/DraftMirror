@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 var classNames = require('classnames');
 var schema = require("prosemirror/dist/schema-basic").schema
 
-var ProseMirror = require('../');
+var DraftMirror = require('../');
 var defaultJson = require('./default');
 
 console.log('schema', schema);
@@ -11,7 +11,7 @@ console.log('schema', schema);
 var EditorExample = React.createClass({
     getInitialState: function() {
         return {
-            editorState: ProseMirror.EditorState.createFromJSON(schema, defaultJson)
+            editorState: DraftMirror.EditorState.createFromJSON(schema, defaultJson)
         }
     },
 
@@ -23,13 +23,13 @@ var EditorExample = React.createClass({
 
     onToggleStyle: function(style) {
         this.onChange(
-            ProseMirror.StyleUtils.toggleInlineStyle(this.state.editorState, style)
+            DraftMirror.StyleUtils.toggleInlineStyle(this.state.editorState, style)
         );
     },
 
     onToggleBlock: function(type, attrs) {
         this.onChange(
-            ProseMirror.StyleUtils.toggleBlockType(this.state.editorState, type, attrs)
+            DraftMirror.StyleUtils.toggleBlockType(this.state.editorState, type, attrs)
         );
     },
 
@@ -46,7 +46,7 @@ var EditorExample = React.createClass({
         var src = window.prompt('SRC:');
 
         this.onChange(
-            ProseMirror.EntityUtils.insertImage(editorState, {
+            DraftMirror.EntityUtils.insertImage(editorState, {
                 src: src
             })
         );
@@ -59,7 +59,7 @@ var EditorExample = React.createClass({
         var editorState = this.state.editorState;
 
         this.onChange(
-            ProseMirror.EntityUtils.insertHR(editorState)
+            DraftMirror.EntityUtils.insertHR(editorState)
         );
     },
 
@@ -73,7 +73,7 @@ var EditorExample = React.createClass({
             className={classNames({
                 'ToggleButton': true,
                 'BlockButton': true,
-                active: ProseMirror.StyleUtils.hasBlockType(editorState, type, attrs)
+                active: DraftMirror.StyleUtils.hasBlockType(editorState, type, attrs)
             })}
             onClick={this.onToggleBlock.bind(this, type, attrs)}
         >{text}</button>
@@ -89,7 +89,7 @@ var EditorExample = React.createClass({
             className={classNames({
                 'ToggleButton': true,
                 'StyleButton': true,
-                active: ProseMirror.StyleUtils.hasInlineStyle(editorState, type, attrs)
+                active: DraftMirror.StyleUtils.hasInlineStyle(editorState, type, attrs)
             })}
             onClick={this.onToggleStyle.bind(this, type, attrs)}
         >{text}</button>

@@ -1,15 +1,17 @@
 
 .ButtonsGroup {
     margin-right: 15px;
+    display: inline-block;
 }
 
-.ToggleButton {
+.ButtonsGroup button {
     background: #eee;
     border: none;
     outline: 0;
     margin: 0px;
     padding: 4px;
     margin-right: 4px;
+    display: inline-block;
 }
 
 .ToggleButton.active {

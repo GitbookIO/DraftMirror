@@ -1,7 +1,7 @@
 {
-  "name": "react-prosemirror",
+  "name": "draftmirror",
   "version": "0.0.0",
-  "description": "React component for ProseMirror backed by an immutable model",
+  "description": "React component for ProseMirror providing a Draft.js like API",
   "main": "./lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
