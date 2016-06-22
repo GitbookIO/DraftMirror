@@ -10,6 +10,14 @@ var DraftMirror = require('../');
 var MathComponent = require('./math');
 var defaultJson = require('./default');
 
+var Tooltip = React.createClass({
+    render: function() {
+        return <div>
+            <span>Set anchor</span>
+        </div>;
+    }
+});
+
 var EditorExample = React.createClass({
     getInitialState: function() {
         var MathWidget = DraftMirror.createWidget({
@@ -134,6 +142,21 @@ var EditorExample = React.createClass({
         >{text}</button>
     },
 
+    /**
+     * Create tooltip
+     */
+    getTooltip: function(node) {
+        switch(node.type) {
+            case 'heading':
+                return {
+                    component: Tooltip,
+                    position: 'right'
+                };
+            default:
+                return;
+        }
+    },
+
     render: function() {
         var editorState = this.state.editorState;
 
@@ -171,6 +194,7 @@ var EditorExample = React.createClass({
             <DraftMirror
                 editorState={editorState}
                 onChange={this.onChange}
+                getTooltip={this.getTooltip}
             />
         </div>;
     }
