@@ -139,7 +139,7 @@ var EditorExample = React.createClass({
                 active: DraftMirror.StyleUtils.hasInlineStyle(editorState, type, attrs)
             })}
             onClick={this.onToggleStyle.bind(this, type, attrs)}
-        >{text}</button>
+        >{text}</button>;
     },
 
     /**
@@ -147,13 +147,13 @@ var EditorExample = React.createClass({
      */
     getTooltip: function(node) {
         switch(node.type) {
-            case 'heading':
-                return {
-                    component: Tooltip,
-                    position: 'right'
-                };
-            default:
-                return;
+        case 'heading':
+            return {
+                component: Tooltip,
+                position: 'right'
+            };
+        default:
+            return undefined;
         }
     },
 
