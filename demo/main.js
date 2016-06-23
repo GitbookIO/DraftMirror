@@ -12,7 +12,14 @@ var defaultJson = require('./default');
 
 var Tooltip = React.createClass({
     render: function() {
-        return <div>
+        var style = {};
+        if (this.props.center) {
+            style = {
+                position: 'absolute',
+                transform: 'translate(-50%, -50%)'
+            };
+        }
+        return <div style={style}>
             <span>{this.props.text}</span>
         </div>;
     }
@@ -152,7 +159,25 @@ var EditorExample = React.createClass({
                 component: Tooltip,
                 position: 'right', // left, bottom
                 props: {
-                    text: 'Text from props'
+                    text: 'heading tooltip'
+                }
+            };
+        case 'image':
+            return {
+                component: Tooltip,
+                position: 'center',
+                props: {
+                    text: 'image tooltip',
+                    center: true
+                }
+            };
+        case 'horizontal_rule':
+            return {
+                component: Tooltip,
+                position: 'center',
+                props: {
+                    text: 'HR tooltip',
+                    center: true
                 }
             };
         default:
