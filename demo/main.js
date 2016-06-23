@@ -93,7 +93,7 @@ var EditorExample = React.createClass({
         var src = window.prompt('SRC:');
 
         this.onChange(
-            DraftMirror.EntityUtils.insertImage(editorState, {
+            DraftMirror.EntityUtils.insertEntity(editorState, 'image', {
                 src: src
             })
         );
@@ -106,7 +106,7 @@ var EditorExample = React.createClass({
         var editorState = this.state.editorState;
 
         this.onChange(
-            DraftMirror.EntityUtils.insertHR(editorState)
+            DraftMirror.EntityUtils.insertHR(editorState, 'horizontal_rule')
         );
     },
 
