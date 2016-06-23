@@ -2,8 +2,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var classNames = require('classnames');
 
-var Schema = require("prosemirror/dist/model").Schema;
-var schema = require("prosemirror/dist/schema-basic").schema;
+var Schema = require('prosemirror/dist/model').Schema;
+var schema = require('prosemirror/dist/schema-basic').schema;
 
 var DraftMirror = require('../');
 
@@ -13,7 +13,7 @@ var defaultJson = require('./default');
 var Tooltip = React.createClass({
     render: function() {
         return <div>
-            <span>Set anchor</span>
+            <span>{this.props.text}</span>
         </div>;
     }
 });
@@ -33,7 +33,7 @@ var EditorExample = React.createClass({
 
         var customSchema = new Schema({
             nodes: schema.nodeSpec.addBefore('image', 'math', {
-                type: MathWidget, group: "inline"
+                type: MathWidget, group: 'inline'
             }),
             marks: schema.markSpec
         });
@@ -41,7 +41,7 @@ var EditorExample = React.createClass({
 
         return {
             editorState: DraftMirror.EditorState.createFromJSON(customSchema, defaultJson)
-        }
+        };
     },
 
     onChange: function(newEditorState) {
@@ -64,7 +64,7 @@ var EditorExample = React.createClass({
 
     onLog: function() {
         var editorState = this.state.editorState;
-        console.log(editorState.getContentAsJSON())
+        console.log(editorState.getContentAsJSON());
     },
 
     /**
@@ -123,7 +123,7 @@ var EditorExample = React.createClass({
                 active: DraftMirror.StyleUtils.hasBlockType(editorState, type, attrs)
             })}
             onClick={this.onToggleBlock.bind(this, type, attrs)}
-        >{text}</button>
+        >{text}</button>;
     },
 
     /**
@@ -150,7 +150,10 @@ var EditorExample = React.createClass({
         case 'heading':
             return {
                 component: Tooltip,
-                position: 'right'
+                position: 'right', // left, bottom
+                props: {
+                    text: 'Text from props'
+                }
             };
         default:
             return undefined;
@@ -160,14 +163,14 @@ var EditorExample = React.createClass({
     render: function() {
         var editorState = this.state.editorState;
 
-        return <div className="EditorExample">
-            <div className="Toolbar">
-                <div className="ButtonsGroup">
+        return <div className='EditorExample'>
+            <div className='Toolbar'>
+                <div className='ButtonsGroup'>
                     <button onClick={this.onUndo} disabled={!DraftMirror.HistoryUtils.canUndo(editorState)}>Undo</button>
                     <button onClick={this.onRedo} disabled={!DraftMirror.HistoryUtils.canRedo(editorState)}>Redo</button>
                 </div>
 
-                <div className="ButtonsGroup">
+                <div className='ButtonsGroup'>
                     {this.renderBlockButton('P', 'paragraph')}
                     {this.renderBlockButton('H1', 'heading', { level: 1 })}
                     {this.renderBlockButton('H2', 'heading', { level: 2 })}
@@ -175,18 +178,18 @@ var EditorExample = React.createClass({
                     {this.renderBlockButton('Code', 'code')}
                 </div>
 
-                <div className="ButtonsGroup">
+                <div className='ButtonsGroup'>
                     {this.renderStyleButton('Bold', 'strong')}
                     {this.renderStyleButton('Italic', 'em')}
                     {this.renderStyleButton('Code', 'code')}
                 </div>
 
-                <div className="ButtonsGroup">
+                <div className='ButtonsGroup'>
                     <button onClick={this.onInsertHR}>Insert HR</button>
                     <button onClick={this.onInsertImage}>Insert Image</button>
                 </div>
 
-                <div className="ButtonsGroup">
+                <div className='ButtonsGroup'>
                     <button onClick={this.onLog}>Log</button>
                 </div>
             </div>
