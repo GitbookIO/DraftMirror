@@ -2,8 +2,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var classNames = require('classnames');
 
-var Schema = require("prosemirror/dist/model").Schema;
-var schema = require("prosemirror/dist/schema-basic").schema;
+var Schema = require('prosemirror/dist/model').Schema;
+var schema = require('prosemirror/dist/schema-basic').schema;
 
 var DraftMirror = require('../');
 
@@ -26,6 +26,21 @@ var testDecorator = DraftMirror.createDecorator(function(contentBlock, callback)
     findWithRegex(HASHTAG_REGEX, contentBlock, 'decorate-hashtag', callback);
 });
 
+var Tooltip = React.createClass({
+    render: function() {
+        var style = {};
+        if (this.props.center) {
+            style = {
+                position: 'absolute',
+                transform: 'translate(-50%, -50%)'
+            };
+        }
+        return <div style={style}>
+            <span>{this.props.text}</span>
+        </div>;
+    }
+});
+
 var EditorExample = React.createClass({
     getInitialState: function() {
         var MathWidget = DraftMirror.createWidget({
@@ -41,7 +56,7 @@ var EditorExample = React.createClass({
 
         var customSchema = new Schema({
             nodes: schema.nodeSpec.addBefore('image', 'math', {
-                type: MathWidget, group: "inline"
+                type: MathWidget, group: 'inline'
             }),
             marks: schema.markSpec
         });
@@ -49,7 +64,7 @@ var EditorExample = React.createClass({
 
         return {
             editorState: DraftMirror.EditorState.createFromJSON(customSchema, defaultJson)
-        }
+        };
     },
 
     onChange: function(newEditorState) {
@@ -72,7 +87,7 @@ var EditorExample = React.createClass({
 
     onLog: function() {
         var editorState = this.state.editorState;
-        console.log(editorState.getContentAsJSON())
+        console.log(editorState.getContentAsJSON());
     },
 
     /**
@@ -101,7 +116,7 @@ var EditorExample = React.createClass({
         var src = window.prompt('SRC:');
 
         this.onChange(
-            DraftMirror.EntityUtils.insertImage(editorState, {
+            DraftMirror.EntityUtils.insertEntity(editorState, 'image', {
                 src: src
             })
         );
@@ -114,7 +129,7 @@ var EditorExample = React.createClass({
         var editorState = this.state.editorState;
 
         this.onChange(
-            DraftMirror.EntityUtils.insertHR(editorState)
+            DraftMirror.EntityUtils.insertHR(editorState, 'horizontal_rule')
         );
     },
 
@@ -131,7 +146,7 @@ var EditorExample = React.createClass({
                 active: DraftMirror.StyleUtils.hasBlockType(editorState, type, attrs)
             })}
             onClick={this.onToggleBlock.bind(this, type, attrs)}
-        >{text}</button>
+        >{text}</button>;
     },
 
     /**
@@ -147,20 +162,56 @@ var EditorExample = React.createClass({
                 active: DraftMirror.StyleUtils.hasInlineStyle(editorState, type, attrs)
             })}
             onClick={this.onToggleStyle.bind(this, type, attrs)}
-        >{text}</button>
+        >{text}</button>;
+    },
+
+    /**
+     * Create tooltip
+     */
+    getTooltip: function(node) {
+        switch(node.type) {
+        case 'heading':
+            return {
+                component: Tooltip,
+                position: 'right', // left, bottom
+                props: {
+                    text: 'heading tooltip'
+                }
+            };
+        case 'image':
+            return {
+                component: Tooltip,
+                position: 'center',
+                props: {
+                    text: 'image tooltip',
+                    center: true
+                }
+            };
+        case 'horizontal_rule':
+            return {
+                component: Tooltip,
+                position: 'center',
+                props: {
+                    text: 'HR tooltip',
+                    center: true
+                }
+            };
+        default:
+            return undefined;
+        }
     },
 
     render: function() {
         var editorState = this.state.editorState;
 
-        return <div className="EditorExample">
-            <div className="Toolbar">
-                <div className="ButtonsGroup">
+        return <div className='EditorExample'>
+            <div className='Toolbar'>
+                <div className='ButtonsGroup'>
                     <button onClick={this.onUndo} disabled={!DraftMirror.HistoryUtils.canUndo(editorState)}>Undo</button>
                     <button onClick={this.onRedo} disabled={!DraftMirror.HistoryUtils.canRedo(editorState)}>Redo</button>
                 </div>
 
-                <div className="ButtonsGroup">
+                <div className='ButtonsGroup'>
                     {this.renderBlockButton('P', 'paragraph')}
                     {this.renderBlockButton('H1', 'heading', { level: 1 })}
                     {this.renderBlockButton('H2', 'heading', { level: 2 })}
@@ -168,18 +219,18 @@ var EditorExample = React.createClass({
                     {this.renderBlockButton('Code', 'code')}
                 </div>
 
-                <div className="ButtonsGroup">
+                <div className='ButtonsGroup'>
                     {this.renderStyleButton('Bold', 'strong')}
                     {this.renderStyleButton('Italic', 'em')}
                     {this.renderStyleButton('Code', 'code')}
                 </div>
 
-                <div className="ButtonsGroup">
+                <div className='ButtonsGroup'>
                     <button onClick={this.onInsertHR}>Insert HR</button>
                     <button onClick={this.onInsertImage}>Insert Image</button>
                 </div>
 
-                <div className="ButtonsGroup">
+                <div className='ButtonsGroup'>
                     <button onClick={this.onLog}>Log</button>
                 </div>
             </div>
@@ -188,6 +239,7 @@ var EditorExample = React.createClass({
                 editorState={editorState}
                 onChange={this.onChange}
                 decorators={[testDecorator]}
+                getTooltip={this.getTooltip}
             />
         </div>;
     }
@@ -197,4 +249,3 @@ ReactDOM.render(
     <EditorExample />,
     document.getElementById('target')
 );
-
