@@ -23,3 +23,8 @@
 .DraftMirrorEditor {
     position: relative;
 }
+
+
+.DraftMirrorEditor-Tooltip {
+    position: absolute;
+}
