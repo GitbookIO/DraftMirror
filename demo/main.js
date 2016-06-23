@@ -10,6 +10,22 @@ var DraftMirror = require('../');
 var MathComponent = require('./math');
 var defaultJson = require('./default');
 
+var HASHTAG_REGEX = /\#[\w\u0590-\u05ff]+/g;
+
+function findWithRegex(regex, contentBlock, className, callback) {
+    var text = contentBlock.text;
+    var matchArr, start;
+
+    while ((matchArr = regex.exec(text)) !== null) {
+        start = matchArr.index;
+        callback(start, start + matchArr[0].length, className);
+    }
+}
+
+var testDecorator = DraftMirror.createDecorator(function(contentBlock, callback) {
+    findWithRegex(HASHTAG_REGEX, contentBlock, 'decorate-hashtag', callback);
+});
+
 var EditorExample = React.createClass({
     getInitialState: function() {
         var MathWidget = DraftMirror.createWidget({
@@ -171,6 +187,7 @@ var EditorExample = React.createClass({
             <DraftMirror
                 editorState={editorState}
                 onChange={this.onChange}
+                decorators={[testDecorator]}
             />
         </div>;
     }
