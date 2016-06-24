@@ -22,12 +22,3 @@
 .decorate-hashtag {
     background: red;
 }
-
-.DraftMirrorEditor {
-    position: relative;
-}
-
-
-.DraftMirrorEditor-Tooltip {
-    position: absolute;
-}

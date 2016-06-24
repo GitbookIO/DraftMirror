@@ -1,0 +1,16 @@
+
+.DraftMirrorEditor {
+    position: relative;
+}
+
+.DraftMirrorEditor-Tooltip {
+    position: absolute;
+}
+
+.DraftMirror-Widget.inline {
+    display: inline-block;
+}
+
+.DraftMirror-Widget.block {
+    display: block;
+}
