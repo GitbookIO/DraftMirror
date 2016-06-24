@@ -183,7 +183,7 @@ var EditorExample = React.createClass({
                 component: Tooltip,
                 position: 'center',
                 props: {
-                    text: 'image tooltip',
+                    text: node.attrs.src,
                     center: true
                 }
             };
