@@ -168,11 +168,32 @@ var EditorExample = React.createClass({
     /**
      * Create tooltip
      */
-    getTooltip: function(node) {
+    getTooltip: function(context) {
+        // Inspect marks
+        var tooltip = context.marks.reduce(function (tooltip, mark) {
+            if (mark.type.name === 'link') {
+                return tooltip || {
+                    component: Tooltip,
+                    type: 'mark',
+                    position: 'bottom',
+                    props: {
+                        text: mark.attrs.href
+                    }
+                };
+            } else {
+                return tooltip;
+            }
+        }, undefined);
+        if (tooltip) return tooltip;
+
+        var node = context.node;
+        if (!node) return undefined;
+
         switch(node.type) {
         case 'heading':
             return {
                 component: Tooltip,
+                type: 'node',
                 position: 'right', // left, bottom
                 props: {
                     text: 'heading tooltip'
@@ -181,6 +202,7 @@ var EditorExample = React.createClass({
         case 'image':
             return {
                 component: Tooltip,
+                type: 'node',
                 position: 'center',
                 props: {
                     text: node.attrs.src,
@@ -190,6 +212,7 @@ var EditorExample = React.createClass({
         case 'horizontal_rule':
             return {
                 component: Tooltip,
+                type: 'node',
                 position: 'center',
                 props: {
                     text: 'HR tooltip',
@@ -197,7 +220,6 @@ var EditorExample = React.createClass({
                 }
             };
         default:
-            return undefined;
         }
     },
 
