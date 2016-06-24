@@ -40,6 +40,8 @@
     "http-server": "^0.9.0",
     "parallelshell": "2.0.0",
     "react-dom": "^15.1.0",
-    "watch": "^0.18.0"
+    "watch": "^0.18.0",
+    "eslint": "^2.11.1",
+    "eslint-plugin-react": "^4.2.1"
   }
 }
