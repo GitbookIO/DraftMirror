@@ -41,24 +41,23 @@ var Tooltip = React.createClass({
     }
 });
 
+var MathWidget = DraftMirror.createWidget({
+    component: MathComponent,
+    attrs: {
+        tex: {}
+    }
+});
+
+
+var customSchema = new Schema({
+    nodes: schema.nodeSpec.addBefore('image', 'math', {
+        type: MathWidget, group: 'inline'
+    }),
+    marks: schema.markSpec
+});
+
 var EditorExample = React.createClass({
     getInitialState: function() {
-        var MathWidget = DraftMirror.createWidget({
-            component: MathComponent,
-            attrs: {
-                tex: {}
-            }
-        });
-
-
-        var customSchema = new Schema({
-            nodes: schema.nodeSpec.addBefore('image', 'math', {
-                type: MathWidget, group: 'inline'
-            }),
-            marks: schema.markSpec
-        });
-
-
         return {
             editorState: DraftMirror.EditorState.createFromJSON(customSchema, defaultJson)
         };
@@ -68,6 +67,11 @@ var EditorExample = React.createClass({
         this.setState({
             editorState: newEditorState
         });
+    },
+
+
+    onRecreate: function() {
+        this.onChange(DraftMirror.EditorState.createFromJSON(customSchema, defaultJson));
     },
 
     onToggleStyle: function(style) {
@@ -228,6 +232,7 @@ var EditorExample = React.createClass({
                 <div className='ButtonsGroup'>
                     <button onClick={this.onUndo} disabled={!DraftMirror.HistoryUtils.canUndo(editorState)}>Undo</button>
                     <button onClick={this.onRedo} disabled={!DraftMirror.HistoryUtils.canRedo(editorState)}>Redo</button>
+                    <button onClick={this.onRecreate}>Recreate</button>
                 </div>
 
                 <div className='ButtonsGroup'>
