@@ -46,10 +46,7 @@ var EditorExample = React.createClass({
         var MathWidget = DraftMirror.createWidget({
             component: MathComponent,
             attrs: {
-                tex: true
-            },
-            props: {
-
+                tex: {}
             }
         });
 
