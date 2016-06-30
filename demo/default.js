@@ -8,7 +8,7 @@ module.exports = {
             'content': [
                 {
                     'type': 'text',
-                    'text': 'Hello World!'
+                    'text': 'Hello #World!'
                 }
             ]
         },

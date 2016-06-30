@@ -23,6 +23,7 @@ function findWithRegex(regex, contentBlock, className, callback) {
 }
 
 var testDecorator = DraftMirror.createDecorator(function(contentBlock, callback) {
+    console.log('find hashtag in ', JSON.stringify(contentBlock.text));
     findWithRegex(HASHTAG_REGEX, contentBlock, 'decorate-hashtag', callback);
 });
 
