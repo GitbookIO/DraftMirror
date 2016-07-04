@@ -151,6 +151,28 @@ var EditorExample = React.createClass({
         >{text}</button>;
     },
 
+    renderTestButton: function() {
+        var that = this;
+        function onClick() {
+            that.onChange(
+                DraftMirror.EntityUtils.appendEntityAndFocus(
+                    that.state.editorState,
+                    'heading',
+                    { level: 1})
+            );
+        }
+
+        return <button
+                   className={classNames({
+                       'ToggleButton': true,
+                       'BlockButton': true,
+                       'active': false
+                   })}
+                   onClick={onClick}>
+            Test
+        </button>;
+    },
+
     /**
      * Render a style toggler for the toolbar
      */
@@ -259,6 +281,10 @@ var EditorExample = React.createClass({
                     <button onClick={this.onLog}>Log</button>
                 </div>
             </div>
+            <div className='ButtonsGroup'>
+                {this.renderTestButton()}
+            </div>
+
 
             <DraftMirror
                 editorState={editorState}
