@@ -69,3 +69,25 @@ const mySchema = new Schema({
 });
 ```
 
+##### Tooltips
+
+You can ask to render tooltips by providing a callback function as prop `getTooltip`. You callback should have such signature:
+
+``` js
+/**
+ * Return tooltip depending on context
+ *
+ * @param {DraftMirror.SelectionContext} context The current context
+ * @return {DraftMirror.Tooltip}
+ */
+function getTooltip(context) {
+  return {
+      component: <ReactComponent>,
+      props:     <Object>
+      position:  'bottom' | 'center' | 'right' | 'left',
+      type:      'mark' | 'node',
+      className: <String>, // Additionnal class for the div
+  };
+}
+
+```
