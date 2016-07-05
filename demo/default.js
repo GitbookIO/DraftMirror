@@ -13,6 +13,15 @@ module.exports = {
             ]
         },
         {
+            'type': 'code_block',
+            'content': [
+                {
+                    'type': 'text',
+                    'text': 'Hello '
+                }
+            ]
+        },
+        {
             'type': 'paragraph',
             'content': [
                 {

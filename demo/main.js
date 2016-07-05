@@ -296,6 +296,7 @@ var EditorExample = React.createClass({
 
             <DraftMirror
                 keymaps={[
+                    DraftMirror.Keymap.baseKeymap,
                     DraftMirror.CodeUtils.createKeymap(300)
                 ]}
                 editorState={editorState}
