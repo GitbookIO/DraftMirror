@@ -154,12 +154,20 @@ var EditorExample = React.createClass({
     renderTestButton: function() {
         var that = this;
         function onClick() {
-            that.onChange(
-                DraftMirror.EntityUtils.appendEntityAndFocus(
-                    that.state.editorState,
+            var editorState = that.state.editorState;
+            editorState = DraftMirror.EntityUtils.insertEntity(
+                    editorState,
+                    'image',
+                    {
+                        src: 'http://prosemirror.net/img/logo.png'
+                    });
+
+            editorState = DraftMirror.EntityUtils.appendEntityAndFocus(
+                    editorState,
                     'heading',
-                    { level: 1})
-            );
+                    { level: 1});
+
+            that.onChange(editorState);
         }
 
         return <button
