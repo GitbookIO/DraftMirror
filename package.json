@@ -1,6 +1,6 @@
 {
   "name": "draftmirror",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "React component for ProseMirror providing a Draft.js like API",
   "main": "./lib/index.js",
   "scripts": {
