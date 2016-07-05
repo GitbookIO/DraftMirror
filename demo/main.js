@@ -295,6 +295,9 @@ var EditorExample = React.createClass({
 
 
             <DraftMirror
+                keymaps={[
+                    DraftMirror.CodeUtils.createKeymap(300)
+                ]}
                 editorState={editorState}
                 onChange={this.onChange}
                 decorators={[testDecorator]}
