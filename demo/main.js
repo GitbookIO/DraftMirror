@@ -299,6 +299,11 @@ var EditorExample = React.createClass({
                     DraftMirror.Keymap.baseKeymap,
                     DraftMirror.CodeUtils.createKeymap(300)
                 ]}
+                inputRules={[
+                    DraftMirror.InputRule.blockQuoteRule(editorState, 'blockquote'),
+                    DraftMirror.InputRule.codeBlockRule(editorState, 'code_block'),
+                    DraftMirror.InputRule.hrRule(editorState, 'horizontal_rule')
+                ]}
                 editorState={editorState}
                 onChange={this.onChange}
                 decorators={[testDecorator]}
