@@ -4,7 +4,7 @@
   "description": "React component for ProseMirror providing a Draft.js like API",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/mocha \"./lib/**/*/__tests__/*.js\" --bail --reporter=list --timeout=10000",
     "build": "browserify -t [ babelify --presets [ es2015 react ] ] ./demo/main.js > ./demo/dist.js && cp ./lib/DraftMirror.css ./demo/",
     "deploy": "npm run build; gh-pages -d ./demo",
     "watch": "watch 'npm run build' ./lib",
@@ -39,11 +39,13 @@
     "babel-preset-react": "^6.5.0",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
+    "eslint": "^2.11.1",
+    "eslint-plugin-react": "^4.2.1",
+    "expect": "^1.20.2",
     "http-server": "^0.9.0",
+    "mocha": "^2.5.3",
     "parallelshell": "2.0.0",
     "react-dom": "^15.1.0",
-    "watch": "^0.18.0",
-    "eslint": "^2.11.1",
-    "eslint-plugin-react": "^4.2.1"
+    "watch": "^0.18.0"
   }
 }
